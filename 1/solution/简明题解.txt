@@ -1,0 +1,7 @@
+第一题是SRM 486 div1 1000pt
+第二题是Topcoder Open 2009 Elimination Round 5 1000pt
+第三题是Topcoder Open 2009 Championship 1000pt
+
+1. 找条划分线，凸包。
+2. 二分图匹配，最大独立集。
+3. 欧拉公式加随便搞搞。
