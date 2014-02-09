@@ -82,9 +82,10 @@ void f3() {
 		V[ S[ p++ ] = i ] = true;
 	}
 	V[ 0 ] = false;
+	int k = p;
 	for( int i = N - 1; i > -1; --i )
 		if( !V[ i ] ) {
-			while( p > 1 ) {
+			while( p > k ) {
 				if( chk( S[ p - 2 ], S[ p - 1 ], i ) )
 					break;
 				else
