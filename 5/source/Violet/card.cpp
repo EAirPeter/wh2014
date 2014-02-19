@@ -1,5 +1,7 @@
 #include <cstdio>
 
+using namespace std;
+
 struct tnode {
 	int s, d;
 	long long v;
