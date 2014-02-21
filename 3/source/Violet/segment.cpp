@@ -18,15 +18,15 @@ class pnt {
 public:
 	pnt( const int px = 0, const int py = 0 ) : x( px ), y( py ) {
 	}
-	void read( const int m ) {
+	inline void read( const int m ) {
 		scanf( "%d%d", &x, &y );
 		n = m;
 		g = atan2( y, x );
 	}
-	int getN() const {
+	inline int getN() const {
 		return n;
 	}
-	double getG() const {
+	inline double getG() const {
 		return g;
 	}
 	inline double dist2() const {
@@ -38,7 +38,7 @@ public:
 private:
 	int x, y, n;
 	double g;
-} D[ 200000 ], *dp, op;
+} D[ 200000 ], op( 0, 0 ), cp( -1, 0 ), *dp = &cp;
 
 inline double operator * ( const pnt & a, const pnt & b ) {
 	return a.x * b.y - a.y * b.x;
@@ -50,13 +50,13 @@ inline bool operator < ( const pnt & a, const pnt & b ) {
 	return a.dist2() < b.dist2();
 }
 
-pnt operator + ( pnt a, const pnt & b ) {
+inline pnt operator + ( pnt a, const pnt & b ) {
 	a.x += b.x;
 	a.y += b.y;
 	return a;
 }
 
-pnt operator - ( pnt a, const pnt & b ) {
+inline pnt operator - ( pnt a, const pnt & b ) {
 	a.x -= b.x;
 	a.y -= b.y;
 	return a;
@@ -65,7 +65,7 @@ pnt operator - ( pnt a, const pnt & b ) {
 class seg {
 	friend bool operator < ( const seg & a, const seg & b );
 public:
-	void read( const int m, const int p ) {
+	inline void read( const int m, const int p ) {
 		n = p;
 		a.read( m );
 		b.read( m );
@@ -75,16 +75,16 @@ public:
 		D[ k ] = a;
 		D[ k + 1 ] = b;
 	}
-	bool vld() const {
+	inline bool vld() const {
 		return a.g != b.g;
 	}
-	bool crs() const {
+	inline bool crs() const {
 		return a * b < 0;
 	}
-	int getN() const {
+	inline int getN() const {
 		return n;
 	}
-	double cro( const pnt & c, const pnt & d ) const {
+	inline double cro( const pnt & c, const pnt & d ) const {
 		double s1 = ( d - a ) * ( b - a );
 		double s2 = ( b - a ) * ( c - a );
 		return s2 / ( s1 + s2 );
@@ -100,7 +100,7 @@ inline bool operator < ( const seg & a, const seg & b ) {
 
 int N, M;
 bool V[ 100000 ];
-int W[ 100000 ];
+bool W[ 100000 ];
 
 set< seg > S;
 
@@ -114,31 +114,23 @@ int main() {
 			--M;
 	}
 	sort( D, D + M * 2 );
-	dp = new pnt( -1, 0 );
 	for( int i = 0; i < M; ++i )
 		if( E[ i ].crs() ) {
 			S.insert( E[ i ] );
-			W[ i ] = 2;
+			W[ i ] = true;
 		}
-	delete dp;
 	for( int i = 0; i < M * 2; ) {
 		dp = D + i;
 		double g = D[ i ].getG();
-		int j = i;
-		for( i = j; i < M * 2 && D[ i ].getG() == g; ++i ) {
+		for( ; i < M * 2 && D[ i ].getG() == g; ++i ) {
 			int n = D[ i ].getN();
-			if( W[ n ] == 0 ) {
-				W[ n ] = 1;
-				S.insert( E[ n ] );
-			}
-		}
-		for( i = j; i < M * 2 && D[ i ].getG() == g; ++i ) {
-			int n = D[ i ].getN();
-			if( W[ n ] == 1 )
-				W[ n ] = 2;
-			else if( W[ n ] == 2 ) {
-				W[ n ] = 0;
+			if( W[ n ] ) {
+				W[ n ] = false;
 				S.erase( E[ n ] );
+			}
+			else {
+				W[ n ] = true;
+				S.insert( E[ n ] );
 			}
 		}
 		if( !S.empty() )

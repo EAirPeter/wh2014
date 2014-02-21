@@ -3,6 +3,12 @@
 
 using namespace std;
 
+#ifdef NAVIO
+#define LLD "%lld"
+#else
+#define LLD "%I64d"
+#endif
+
 const long long MDN = 1000000009LL;
 const int MXP = 1 << 16;
 
@@ -90,7 +96,7 @@ int main() {
 						H[ i ][ j ][ k ] = ( H[ i ][ j ][ k ] + H[ i - 1 ][ j - l ][ k - m ] * E[ i - 1 ][ l ][ m ] ) % MDN;
 	for( int i = 0; i <= M; ++i )
 		x += H[ K ][ i ][ N ];
-	printf( "%lld\n", x % MDN );
+	printf( LLD "\n", x % MDN );
 	return 0;
 }
 

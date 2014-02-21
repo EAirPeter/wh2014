@@ -4,6 +4,12 @@
 
 using namespace std;
 
+#ifdef NAVIO
+#define LLD "%lld"
+#else
+#define LLD "%I64d"
+#endif
+
 struct pnt {
 	int x, y;
 } D[ 501 ], E[ 501 ];
@@ -46,7 +52,7 @@ int ff( const pnt * f, const int l, int & p, const int g, const int o ) {
 int main() {
 	freopen( "shoot.in", "r", stdin );
 	freopen( "shoot.out", "w", stdout );
-	scanf( "%d%lld", &N, &M );
+	scanf( "%d" LLD, &N, &M );
 	for( int i = 2; i <= N; ++i ) {
 		if( !vpr[ i ] ) {
 			pri[ prc++ ] = i;
@@ -108,7 +114,7 @@ int main() {
 		X += h.top();
 		h.pop();
 	}
-	printf( "%lld\n", X );
+	printf( LLD "\n", X );
 	return 0;
 }
 

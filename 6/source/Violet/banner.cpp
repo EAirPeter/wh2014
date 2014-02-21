@@ -3,6 +3,12 @@
 
 using namespace std;
 
+#ifdef NAVIO
+#define LLD "%lld"
+#else
+#define LLD "%I64d"
+#endif
+
 int D[ 100001 ][ 6 ];
 int E[ 100001 ];
 
@@ -17,7 +23,7 @@ long long sum( long long a, long long b, long long c ) {
 int main(  ) {
 	freopen( "banner.in", "r", stdin );
 	freopen( "banner.out", "w", stdout );
-	scanf( "%lld%lld%lld%lld%lld", &M, &N, &L, &H, &B );
+	scanf( LLD LLD LLD LLD LLD, &M, &N, &L, &H, &B );
 	for( int i = 2; i <= N; i++ )
 		if( E[ i ] == 0 )
 			for( int j = i; j <= N; j += i )
@@ -53,6 +59,6 @@ int main(  ) {
 		X = ( X * 2 + N * ( M + 1 ) + M * ( N + 1 ) ) % B;
 	else
 		X = ( X * 2 ) % B;
-	printf( "%lld\n", X );
+	printf( LLD "\n", X );
 }
 

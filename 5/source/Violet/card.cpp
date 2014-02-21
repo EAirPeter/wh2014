@@ -2,6 +2,12 @@
 
 using namespace std;
 
+#ifdef NAVIO
+#define LLD "%lld"
+#else
+#define LLD "%I64d"
+#endif
+
 struct tnode {
 	int s, d;
 	long long v;
@@ -138,7 +144,7 @@ int main() {
 	x = t->v;
 	while( t != nil )
 		x += ( t = next( next( t ) ) )->v;
-	printf( "%lld\n", x );
+	printf( LLD "\n", x );
 	return 0;
 }
 
